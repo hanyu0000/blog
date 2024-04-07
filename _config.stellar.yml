@@ -14,9 +14,9 @@ inject:
     - <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/lxgw-wenkai-screen-webfont/1.7.0/style.min.css" media="all" />
 
 logo:
-  icon: /assets/icon.svg
-  title: Stellar
-  subtitle: '每个人的独立博客 | Designed by xaoxuu'
+  icon: /img/beijng.jpg
+  title: hanyu
+  subtitle: 'zhhsdzjikhsdjkfhksdjhf'
 menubar:
   items: 
     - id: post
