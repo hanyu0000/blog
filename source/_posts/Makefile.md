@@ -17,27 +17,27 @@ gcc -o a.out helloworld.c
 首先在同一个目录下创建一个 Makefile 文件和 helloworld.c 文件
 
 在Makefile文件中输入：
+~~~ shell
+a.out: helloworld.o
 
->a.out: helloworld.o
->
->（Tab） @gcc -o a.out helloworld.o
->
->helloworld.o: helloworld.c
->
->（Tab） @gcc -c -o helloworld.o helloworld.c
->
->clean:
->
->（Tab） @rm -f a.out helloworld.o
+（Tab） @gcc -o a.out helloworld.o
 
+helloworld.o: helloworld.c
+
+（Tab） @gcc -c -o helloworld.o helloworld.c
+
+clean:
+
+（Tab） @rm -f a.out helloworld.o
+~~~
 ！！！注意在 Makefile 中，每个命令必须以一个 Tab 字符开头，而不是空格
 
 然后在这个目录下直接敲击 make 命令,会出现 Makefile 文件中的这两行：
-
+~~~ shell
 gcc -c -o helloworld.o helloworld.c
 
 gcc -o a.out helloworld.o
-
+~~~
 这时直接编译./a.out
 
 便会直接输出 helloworld！
@@ -60,15 +60,15 @@ Makefile也是一个研究开源项目的利器。很多开源项目可能文档
 
 ### 规则
 通过规则 Makefile 构建可执行文件编译所依赖的**关系树**
+~~~ shell
+目标：目标依赖
 
->目标：目标依赖
->
->a.out: hello.c
->
->命令
->
->gcc -o a.out hello.c
+a.out: hello.c
 
+命令
+
+gcc -o a.out hello.c
+~~~
 a.out 就是我们要生成的目标,目标一般是一个可执行文件
 
 目标依赖是指生成这个可执行文件所依赖的源文件，如 hello.c
@@ -78,10 +78,11 @@ a.out 就是我们要生成的目标,目标一般是一个可执行文件
 一个规则中的三个部分并不是都必须要有的:
 
 一个 Makefile 文件中可能包含多个规则，有的规则可能无目标依赖，仅仅是为了实现某种操作。如下面的clean命令：
->clean:
->
->rm -f a.out hello.o
+~~~ shell
+clean:
 
+rm -f a.out hello.o
+~~~
 当我们使用 make clean 命令清理编译的文件时，会调用这个规则中的命令，不需要什么依赖，仅仅是执行删除操作，所以这个规则中并没有目标依赖。
 
 当然，一个规则中也可以没有命令，仅仅包含目标和目标依赖，用来描述一种依赖关系。**但一个规则中一定要有一个目标。**
@@ -98,24 +99,27 @@ a.out 就是我们要生成的目标,目标一般是一个可执行文件
 一个规则中也可以有多个目标，多个目标具有**相同的**生成命令和依赖文件
 
 如一个目标文件 a.o 都是由其对应的源文件 a.c 编译生成的，生成命令也是相同的：
->a.o: a.c
->
->gcc -o a.o a.c
+~~~ shell
+a.o: a.c
 
+gcc -o a.o a.c
+~~~
 ### 多规则目标
 
 多个规则可能是同一个目标，make 在解析 Makefile 文件时，会将具有相同目标的规则的依赖文件合并
->a.out: hello.c
->
->gcc -o a.out hello.c
->
->a.out: module.c
+~~~ shell
+a.out: hello.c
 
+gcc -o a.out hello.c
+
+a.out: module.c
+~~~
 Make 在解析 Makefile 构建依赖关系树时，会将这两个规则合并为：
->a.out: hello.c module.c
->
->gcc -o a.out hello.c other.c
+~~~ shell
+a.out: hello.c module.c
 
+gcc -o a.out hello.c other.c
+~~~
 ### 伪目标
 
 有时候我们设置一个目标，并不是真正生成这个文件
